@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GuestBook Casa Jorn{% endblock %}
+
+{% block body %}
+
+	{% if entries %}
+		<table>
+			<thead>
+				<tr>
+					<th>Guest</th>
+					<th>Message</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for entry in entries %}
+					<tr>
+						<td>entry.name</td>
+						<td>entry.message</td>
+						<td><a href="/entry/1" class="btn btn-dark">Edit</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>There are no guest entries to display</p>
+	{% endif %}
+
+{% endblock %}
