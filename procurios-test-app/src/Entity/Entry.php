@@ -20,12 +20,17 @@ class Entry
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $guestName;
+	private $guestName;
+	
+	/**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $guestLocation;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $message;
+	private $message;
 
     public function getId(): ?int
     {
@@ -42,17 +47,30 @@ class Entry
         $this->guestName = $guestName;
 
         return $this;
+	}
+	
+	public function getGuestLocation(): ?string
+    {
+        return $this->guestLocation;
     }
 
-    public function getMessage(): ?text
+    public function setGuestLocation(string $guestLocation): self
+    {
+        $this->guestLocation = $guestLocation;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    public function setMessage(string $message): text
+    public function setMessage(string $message): self
     {
         $this->message = $message;
 
         return $this;
-    }
+	}
+	
 }

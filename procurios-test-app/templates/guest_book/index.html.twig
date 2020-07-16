@@ -5,10 +5,11 @@
 {% block body %}
 
 	{% if entries %}
-		<table>
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Guest</th>
+					<th>From</th>
 					<th>Message</th>
 					<th></th>
 				</tr>
@@ -16,9 +17,13 @@
 			<tbody>
 				{% for entry in entries %}
 					<tr>
-						<td>entry.name</td>
-						<td>entry.message</td>
-						<td><a href="/entry/1" class="btn btn-dark">Edit</a></td>
+						<td>{{entry.guestName}}</td>
+						<td>{{entry.guestLocation}}</td>
+						<td>{{entry.message}}</td>
+						<td>
+							<a href="/entry/edit/{{entry.id}}" class="btn btn-dark">Edit</a>
+{# 							<a href="#" class="btn btn-danger delete-entry" data-id="{{entry.id}}">Delete</a> #}
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>

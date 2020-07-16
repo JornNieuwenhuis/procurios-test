@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Leave a message in our guestbook{% endblock %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+
+		<input type="submit" value="Save" class='btn btn-primary mt-3'/>
+
+	{{ form_end(form) }}
+
+{% endblock %}
