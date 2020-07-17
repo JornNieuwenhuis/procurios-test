@@ -32,6 +32,11 @@ class Entry
      */
 	private $message;
 
+	/**
+     * @ORM\Column(type="datetime")
+     */
+	private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,7 +50,6 @@ class Entry
     public function setGuestName(string $guestName): self
     {
         $this->guestName = $guestName;
-
         return $this;
 	}
 	
@@ -57,7 +61,6 @@ class Entry
     public function setGuestLocation(string $guestLocation): self
     {
         $this->guestLocation = $guestLocation;
-
         return $this;
     }
 
@@ -69,7 +72,17 @@ class Entry
     public function setMessage(string $message): self
     {
         $this->message = $message;
+        return $this;
+	}
 
+	public function getDate(): ?\DateTime
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTime $date): self
+    {
+        $this->date = $date;
         return $this;
 	}
 	

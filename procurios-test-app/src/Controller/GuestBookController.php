@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Entry;
-use App\Form\EntryType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -12,18 +11,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class GuestBookController extends AbstractController
-{
+class GuestBookController extends AbstractController {
+
     /**
      * @Route("/", name="guest_book", methods={"GET"})
      */
-    public function index()
-    {
-		$entries = $this->getDoctrine()->getRepository(Entry::class)->findAll();
+    public function index() {
+		/* findAll() function is overridden in EntryRepository to sort by date */
         return $this->render('guest_book/index.html.twig', [
-			'entries' => $entries
+			'entries' => $this->getDoctrine()->getRepository(Entry::class)->findAll()
         ]);
 	}
 
@@ -49,6 +46,7 @@ class GuestBookController extends AbstractController
 
 		if($form->isSubmitted() && $form->isValid()) {
 			$entry = $form->getData();
+			$entry->setDate(new \DateTime());
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($entry);
 			$entityManager->flush();
@@ -100,13 +98,14 @@ class GuestBookController extends AbstractController
 	 */
 	public function delete(Request $request, $id) {
 		$entry = $this->getDoctrine()->getRepository(Entry::class)->find($id);
-		$em = $this->getDoctrine()->getManager();
+		$entityManager = $this->getDoctrine()->getManager();
+
 		try {
-			$em->remove($entry);
-			$em->flush();
+			$entityManager->remove($entry);
+			$entityManager->flush();
 			$this->addFlash('success', 'The entry has been REMOVED.');
 		} catch (\Throwable $th) {
-			$this->addFlash('error', 'Failed to delete entry.');
+			$this->addFlash('error', 'Oops. Something did not go as planned, possibly failed to remove entry.');
 			return new Response($th.getMessage());
 		}
 
